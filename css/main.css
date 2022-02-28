@@ -1,0 +1,218 @@
+body{
+	/*background-color: #fa6a31;*/ /*Fondo naranja*/
+  background-color: #FCFCFC;
+}
+
+/************************/
+/******* FUENTES *******/
+@font-face{
+  font-family: roboto;
+  src: url("../font/Roboto_Light.ttf"); /*Fuente titulos*/
+  /*src: url("../font/Fredoka_Light.ttf");*/ /*Fuente contenido*/
+}
+
+.roboto{
+  font-family: roboto;
+}
+.fredoka{
+  font-family: fredoka;
+}
+
+/************************/
+
+
+/************************/
+/** PALETA DE COLORES **/
+
+:root{
+  --mirror: #333333;
+  --sunset: #fa6a31;
+  --cloud:  #f9f9f9;
+  --land: #9e5930;
+}
+
+.g-bg-mirror{
+  background-color: var(--mirror);
+}
+.g-bg-sunset{
+  background-color: var(--sunset);
+}
+.g-bg-cloud{
+  background-color: var(--cloud);
+}
+.g-bg-land{
+  background-color: var(--land);
+}
+
+.g-color-mirror{
+  color: var(--mirror);
+}
+.g-color-sunset{
+  color: var(--sunset);
+}
+.g-color-cloud{
+  color: var(--cloud);
+}
+.g-color-land{
+  color: var(--land);
+}
+/************************/
+/************************/
+
+#loading {
+	position: fixed;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	opacity: 0.7;
+	background-color: black;
+	z-index: 99;
+  }
+  
+  #loading div {
+	z-index: 100;
+  }
+.loader,
+.loader:after {
+  border-radius: 50%;
+  width: 10em;
+  height: 10em;
+}
+.loader {
+  margin: 60px auto;
+  font-size: 10px;
+  position: relative;
+  text-indent: -9999em;
+  border-top: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-right: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-left: 1.1em solid #ffffff;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: load8 1.1s infinite linear;
+  animation: load8 1.1s infinite linear;
+}
+
+/*Code hero-image*/
+  .hero-image{
+    background-image: url(../img/h.jpg);
+    margin-bottom: 100px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 35%;
+    text-align: center;
+    position: fixed;
+  }
+
+  .logo-hero{
+    margin-top: 5px;
+    border-radius: 200px;
+    /*width: 10%;
+    height: 10%;*/
+    padding: 10px;
+  }
+
+  .mt-form{
+    margin-top: 110px;
+  }
+
+  .card-header-bg{
+    background-color: var(--cloud);
+    color: var(--mirror);
+  }
+
+  .card{
+    border-radius: 8px;
+    transition: 0.9s;
+  }
+  .card:hover{
+    box-shadow: rgba(0,0,0, 0.2) 0px 0px 17px;
+    transition: 0.9s;
+  }
+
+
+
+  /* Set a specific height */
+  /*height: 50%;*/
+
+  /* Position and center the image to scale nicely on all screens */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+/* Place text in the middle of the image */
+.hero-text {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+/*Code hero-image*/
+
+@-webkit-keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 576px){
+  .logo-hero{
+    width: 30%;
+    height: 30%;
+  }
+}
+
+@media screen and (min-width: 576px){
+  .logo-hero{
+    width: 20%;
+    height: 20%;
+  }
+}
+
+@media screen and (min-width: 768px){
+  .logo-hero{
+    width: 15%;
+    height: 15%;
+  }
+}
+
+@media screen and (min-width: 992px){
+  .logo-hero{
+    width: 12%;
+    height: 12%;
+  }
+}
+
+@media screen and (min-width: 1200px){
+  .logo-hero{
+    width: 10%;
+    height: 10%;
+  }
+}
+
+
