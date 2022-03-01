@@ -1,14 +1,11 @@
-<?php   
-    // $serverName = "192.168.1.63";
-    // $database = "SAP";
-    // $uid = 'sa';
-    // $pwd = 'Z3r0C001X';
+<?php 
 
-    /**
-     * 
-     */
-    require_once '../config/config.php';
-    class Conexion
+/**
+ * summary
+ */
+
+require_once '../config/config.php';
+ class Conexion_Sap
     {
     	private $host;
     	private $usuario;
@@ -17,49 +14,31 @@
     	private $connection;
     	
     	function __construct()
-        {
-            $this->host = SERVER_OD;
-            $this->usuario = USER_OD;
-            $this->pass = PSSWD_OD;
-            $this->db = BD_OD;
-        }
+    	{
+    		$this->host = SERVER_OD;
+        	$this->usuario = USER_OD;
+        	$this->pass = PSSWD_OD;
+        	$this->db = BD_OD;
+    	}
 
     	/*CONECT TO DATABASE*/
     	function connect()
     	{
-    	
-
-    				$opciones = array(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    	
     				try {
-    						$this->connection = new PDO(
-            						'sqlsrv:server=' . $this->host . ';database=' . $this->db,
-        		    				$this->usuario,
-        		    				$this->pass,
-        		    				$opciones
-				
-        					);	
+    						
+    						$this->connection = new PDO($this->host,$this->usuario,$this->pass);
+
     				} catch (Exception $e) {
-    					
-    				}
-    				
-    		
-    		
+    						
+    				}	
     	}
 
     	public function veryfyCon()
     	{
     		$var="off";
-    		$opciones = array(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     	
     				try {
-    						$this->connection = new PDO(
-            						'sqlsrv:server=' . $this->host . ';database=' . $this->db,
-        		    				$this->usuario,
-        		    				$this->pass,
-        		    				$opciones
-				
-        					);
+    						$this->connection = new PDO($this->host,$this->usuario,$this->pass);
         			$var="on";	
     		 } catch (Exception $e) {
     					
@@ -67,17 +46,13 @@
     		 return $var;
     	}
 
-    	public function veryfyConOff($value='')
-    	{
-    		
-    	}
-
     	/*EXECUTE SELECT*/
     	function getData($sql)
     	{
- 	
  	   	    $data = array();
- 	   	    $result = $this->connection->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+            $sql=str_replace("DB", $this->db, $sql);
+            // echo $sql;
+ 	   	    $result = $this->connection->prepare($sql);
  			$error = $this->connection->errorInfo();
     	    
     	    if ($error[0] === "00000") {

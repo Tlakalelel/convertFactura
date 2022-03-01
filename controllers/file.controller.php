@@ -37,19 +37,48 @@ class XMLEXCEL
     public function subirArchivoXml()
     {   
         $htmlArN='';     
-        
             $this->nameFile = $_FILES["fileXml"]["name"];
                 if(move_uploaded_file($_FILES["fileXml"]["tmp_name"],$this->nameSrc.$this->nameFile)){
-                  
-                    if ($this->objArticulos->verify()!="off") {
-                      $this->leerArchivoXml();
+                    if ($this->objArticulos->verifySB1()!="off") {
+                      $this->prt("SPB0");
+                    }else if ($this->objArticulos->verify()!="off") {
+                      $this->prt("SQLS");      
+                    } else {
+                      
+                      $json=array(
+                                'op' => 'error2',
+                                'title'=> '¡Error!',
+                                'text'=> 'No se estableció la conexión a la base de datos',
+                                'html'=>'<p>0 Articulos</p>'
+                            );
+                      unlink($this->nameSrc.$this->nameFile);
+                            die(json_encode($json));
+                    }
+                    
+                    
+                }else{
+                    $json=array(
+                        'op' => 'error2',
+                        'title'=> '¡Error!',
+                        'text'=> 'No se completó correctamente la subida del archivo intente nuevamente',
+                        'html'=>'<p>0 Articulos</p>'
+                    );
+                    die(json_encode($json));
+                }
+            
+        
+    }
+
+    public function prt($value)
+    {
+       $this->leerArchivoXml($value);
                         if ($this->proveedor!=NULL) {
                           if (count($this->listaNoArticulos)==0) {
-                            if (isset($_POST['prueba'])) {
-                               $this->exportarArchivoExl();
-                            }else{
-                                $this->exportarTxt();
-                            }
+                                if (isset($_POST['prueba'])) {
+                                   $this->exportarArchivoExl();
+                                }else{
+                                    $this->exportarTxt();
+                                }
                               
                               
                             }else{
@@ -77,34 +106,9 @@ class XMLEXCEL
                           unlink($this->nameSrc.$this->nameFile);
                             die(json_encode($json));
                         }
-                          
-                    } else {
-                      
-                      $json=array(
-                                'op' => 'error2',
-                                'title'=> '¡Error!',
-                                'text'=> 'No se estableció la conexión a la base de datos',
-                                'html'=>'<p>0 Articulos</p>'
-                            );
-                      unlink($this->nameSrc.$this->nameFile);
-                            die(json_encode($json));
-                    }
-                    
-                    
-                }else{
-                    $json=array(
-                        'op' => 'error2',
-                        'title'=> '¡Error!',
-                        'text'=> 'No se completó correctamente la subida del archivo intente nuevamente',
-                        'html'=>'<p>0 Articulos</p>'
-                    );
-                    die(json_encode($json));
-                }
-            
-        
     }
 
-    public function leerArchivoXml()
+    public function leerArchivoXml($db)
     {
         $i=0;
         $xml = simplexml_load_file($this->nameSrc.$this->nameFile); 
@@ -129,7 +133,13 @@ class XMLEXCEL
         $clave="";
         // echo '<p>'.$cfdiConcepto['NoIdentificacion'].'</p>';
         $this->objArticulos->setNoIdentificardor($cfdiConcepto['NoIdentificacion']);
-              $this->objArticulos->buscarArticulo();
+              if ($db=="SQLS") {
+                $this->objArticulos->buscarArticulo();
+              }else{
+                $this->objArticulos->buscarArticuloSap();
+              }
+
+              
               $this->ex="true";
               $clave=$this->objArticulos->getClaveArticulo()!=NULL ? $this->objArticulos->getClaveArticulo():"00000";
         // echo '<p>'.$this->objArticulos->getClaveArticulo().'</p>'; 
